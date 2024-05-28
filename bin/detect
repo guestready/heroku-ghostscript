@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "Ghostscript install"
+exit 0
