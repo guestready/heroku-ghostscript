@@ -17,4 +17,13 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/ghostscript.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$HOME/.heroku/ghostscript/bin:$PATH"' > $PROFILE_PATH
 
+echo "-----> Check Ghostscript version"
+export PATH="$HOME/.heroku/ghostscript/bin:$PATH"
+gs --version | grep $GS_VERSION && true
+if (( $? != 0 )) ; then
+    echo "Invalid Ghostscript version: $(gs --version)"
+    echo "Expected version: $(echo $GS_VERSION)"
+    exit 1
+fi
+
 echo "-----> Ghostscript installation done!"
