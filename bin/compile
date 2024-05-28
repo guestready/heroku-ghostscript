@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BUILD_DIR='.'
+BUILD_DIR=$1
 GS_VERSION='10.03.1'
 GS_INSTALL_DIR="$BUILD_DIR/.heroku/ghostscript/bin"
 GS_BINARY_URL="https://github.com/guestready/gs-bin/raw/main/gs"
@@ -15,6 +15,6 @@ echo "-----> Update PATH to override existing Ghostscript installs"
 
 PROFILE_PATH="$BUILD_DIR/.profile.d/ghostscript.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="$HOME/.heroku/ghostscript/bin:$PATH"' > $PROFILE_PATH
+echo 'export PATH="$HOME/.heroku/ghostscript/bin:$PATH"' >> $PROFILE_PATH
 
 echo "-----> Ghostscript installation done!"
