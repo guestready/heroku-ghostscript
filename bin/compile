@@ -5,20 +5,16 @@ GS_VERSION='10.03.1'
 GS_INSTALL_DIR="$BUILD_DIR/.heroku/ghostscript/bin"
 GS_BINARY_URL="https://github.com/guestready/gs-bin/raw/main/gs"
 
-echo "-----> Installing Ghostscript v$GS_VERSION"
+echo "-----> Install Ghostscript v$GS_VERSION"
 
 mkdir -p $GS_INSTALL_DIR
 curl -L $GS_BINARY_URL > $GS_INSTALL_DIR/gs
 chmod 0755 $GS_INSTALL_DIR/gs
 
-export PATH="$GS_INSTALL_DIR:$PATH"
-echo "-----> Check Ghostscript version"
+echo "-----> Update PATH to override existing Ghostscript installs"
 
-gs --version | grep $GS_VERSION && true
-if (( $? != 0 )) ; then
-    echo "Invalid Ghostscript version: $(gs --version)"
-    echo "Expected version: $(echo $GS_VERSION)"
-    exit 1
-fi
+PROFILE_PATH="$BUILD_DIR/.profile.d/ghostscript.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$HOME/.heroku/ghostscript/bin:$PATH"' > $PROFILE_PATH
 
-echo "-----> Ghostscript installation done"
+echo "-----> Ghostscript installation done!"
